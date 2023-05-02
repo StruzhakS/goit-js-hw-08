@@ -1,11 +1,12 @@
 import throttle from 'lodash.throttle';
+import { saveToLS } from './helpers';
 
 const form = document.querySelector('.feedback-form');
 const btn = form.querySelector('button');
 let obj = {};
 const defaulValue = JSON.parse(localStorage.getItem('feedback-form-state'));
 
-form.addEventListener('input', throttle(takeInputToLS, 2000));
+form.addEventListener('input', throttle(takeInputToLS, 500));
 
 function takeInputToLS(e) {
   obj.email = form.elements.email.value;
@@ -21,7 +22,7 @@ function takeInputToLS(e) {
 }
 
 function getValueToLS(data) {
-  localStorage.setItem('feedback-form-state', JSON.stringify(data));
+  saveToLS('feedback-form-state', obj);
 }
 
 form.email.value = defaulValue?.email || '';
